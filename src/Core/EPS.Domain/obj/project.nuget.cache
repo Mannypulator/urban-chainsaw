@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "YFfdXzwecbI=",
+  "success": true,
+  "projectFilePath": "/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Domain/EPS.Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/mac/.nuget/packages/microsoft.netcore.app.ref/8.0.13/microsoft.netcore.app.ref.8.0.13.nupkg.sha512",
+    "/Users/mac/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.13/microsoft.aspnetcore.app.ref.8.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,17 @@
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/obj/Debug/net8.0/EPS.Persistence.csproj.AssemblyReference.cache
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/obj/Debug/net8.0/EPS.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/obj/Debug/net8.0/EPS.Persistence.AssemblyInfoInputs.cache
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/obj/Debug/net8.0/EPS.Persistence.AssemblyInfo.cs
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/obj/Debug/net8.0/EPS.Persistence.csproj.CoreCompileInputs.cache
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/bin/Debug/net8.0/EPS.Persistence.deps.json
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/bin/Debug/net8.0/EPS.Persistence.dll
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/bin/Debug/net8.0/EPS.Persistence.pdb
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/bin/Debug/net8.0/EPS.Application.dll
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/bin/Debug/net8.0/EPS.Domain.dll
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/bin/Debug/net8.0/EPS.Application.pdb
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/bin/Debug/net8.0/EPS.Domain.pdb
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/obj/Debug/net8.0/EPS.Pers.82CAE711.Up2Date
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/obj/Debug/net8.0/EPS.Persistence.dll
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/obj/Debug/net8.0/refint/EPS.Persistence.dll
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/obj/Debug/net8.0/EPS.Persistence.pdb
+/Users/mac/Documents/Personal-Projects/EPS/src/Infrastructure/EPS.Persistence/obj/Debug/net8.0/ref/EPS.Persistence.dll

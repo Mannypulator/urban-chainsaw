@@ -1,0 +1,15 @@
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/bin/Debug/net8.0/EPS.Application.deps.json
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/bin/Debug/net8.0/EPS.Application.dll
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/bin/Debug/net8.0/EPS.Application.pdb
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/bin/Debug/net8.0/EPS.Domain.dll
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/bin/Debug/net8.0/EPS.Domain.pdb
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/obj/Debug/net8.0/EPS.Application.csproj.AssemblyReference.cache
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/obj/Debug/net8.0/EPS.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/obj/Debug/net8.0/EPS.Application.AssemblyInfoInputs.cache
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/obj/Debug/net8.0/EPS.Application.AssemblyInfo.cs
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/obj/Debug/net8.0/EPS.Application.csproj.CoreCompileInputs.cache
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/obj/Debug/net8.0/EPS.Appl.5DA56F29.Up2Date
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/obj/Debug/net8.0/EPS.Application.dll
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/obj/Debug/net8.0/refint/EPS.Application.dll
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/obj/Debug/net8.0/EPS.Application.pdb
+/Users/mac/Documents/Personal-Projects/EPS/src/Core/EPS.Application/obj/Debug/net8.0/ref/EPS.Application.dll

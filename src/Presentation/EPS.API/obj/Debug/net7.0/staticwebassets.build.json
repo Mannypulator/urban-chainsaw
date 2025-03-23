@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "y5LWOjIbUWvprGCfjgM+9PEMSH3OUjcu+x2mHA7HuEs=",
+  "Source": "EPS.API",
+  "BasePath": "_content/EPS.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
