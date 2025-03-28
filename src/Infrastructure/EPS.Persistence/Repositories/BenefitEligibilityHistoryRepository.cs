@@ -1,11 +1,12 @@
-using Microsoft.EntityFrameworkCore;
 using EPS.Domain.Entities;
 using EPS.Domain.Repositories;
 using EPS.Persistence.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace EPS.Persistence.Repositories;
 
-public class BenefitEligibilityHistoryRepository : GenericRepository<BenefitEligibilityHistory>, IBenefitEligibilityHistoryRepository
+public class BenefitEligibilityHistoryRepository : GenericRepository<BenefitEligibilityHistory>,
+    IBenefitEligibilityHistoryRepository
 {
     public BenefitEligibilityHistoryRepository(EPSDbContext context) : base(context)
     {

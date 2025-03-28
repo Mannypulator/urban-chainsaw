@@ -1,10 +1,11 @@
 using EPS.Infrastructure.BackgroundJobs.Jobs;
 using Hangfire;
+using Hangfire.Common;
+using Hangfire.Dashboard;
 using Hangfire.SqlServer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
-using Hangfire.Dashboard;
 
 namespace EPS.Infrastructure.BackgroundJobs;
 
@@ -48,19 +49,19 @@ public static class DependencyInjection
         // Process contributions every hour
         recurringJobManager.AddOrUpdate(
             "ProcessContributions",
-            Hangfire.Common.Job.FromExpression<ContributionProcessingJob>(x => x.ProcessPendingContributionsAsync()),
+            Job.FromExpression<ContributionProcessingJob>(x => x.ProcessPendingContributionsAsync()),
             Cron.Hourly());
 
         // Calculate interest daily at midnight
         recurringJobManager.AddOrUpdate(
             "CalculateInterest",
-            Hangfire.Common.Job.FromExpression<InterestCalculationJob>(x => x.CalculateInterestForProcessedContributionsAsync()),
+            Job.FromExpression<InterestCalculationJob>(x => x.CalculateInterestForProcessedContributionsAsync()),
             Cron.Daily());
 
         // Update benefit eligibility daily at 1 AM
         recurringJobManager.AddOrUpdate(
             "UpdateBenefitEligibility",
-            Hangfire.Common.Job.FromExpression<BenefitEligibilityJob>(x => x.UpdateBenefitEligibilityForAllMembersAsync()),
+            Job.FromExpression<BenefitEligibilityJob>(x => x.UpdateBenefitEligibilityForAllMembersAsync()),
             Cron.Daily(1));
 
         // Enable Hangfire Dashboard

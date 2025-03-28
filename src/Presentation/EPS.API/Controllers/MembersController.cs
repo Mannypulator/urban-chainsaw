@@ -1,7 +1,7 @@
+using EPS.API.ActionFilters;
 using EPS.Application.DTOs;
 using EPS.Application.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace EPS.API.Controllers;
 
@@ -9,8 +9,8 @@ namespace EPS.API.Controllers;
 [Route("api/[controller]")]
 public class MembersController : ControllerBase
 {
-    private readonly IMemberService _memberService;
     private readonly ILogger<MembersController> _logger;
+    private readonly IMemberService _memberService;
 
     public MembersController(IMemberService memberService, ILogger<MembersController> logger)
     {
@@ -19,125 +19,66 @@ public class MembersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<MemberDto>> CreateMember([FromBody] CreateMemberDto createDto)
+    [ProducesResponseType(typeof(MemberDto), StatusCodes.Status200OK)]
+    [ServiceFilter(typeof(ValidationModelFilterAttribute<CreateMemberDto>))]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> CreateMember([FromBody] CreateMemberDto request)
     {
-        try
-        {
-            var member = await _memberService.CreateMemberAsync(createDto);
-            return CreatedAtAction(nameof(GetMember), new { id = member.Id }, member);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating member");
-            return BadRequest(ex.Message);
-        }
+        var member = await _memberService.CreateMemberAsync(request);
+        return CreatedAtAction(nameof(GetMember), new { id = member.Id }, member);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<MemberDto>> GetMember(Guid id)
+    [ProducesResponseType(typeof(MemberDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetMember(Guid id)
     {
-        try
-        {
-            var member = await _memberService.GetMemberByIdAsync(id);
-            if (member == null)
-                return NotFound();
+        var member = await _memberService.GetMemberByIdAsync(id);
+        if (member == null) return NotFound();
 
-            return Ok(member);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving member {MemberId}", id);
-            return BadRequest(ex.Message);
-        }
+        return Ok(member);
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<MemberDto>>> GetAllMembers()
+    [ProducesResponseType(typeof(IReadOnlyList<MemberDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAllMembers()
     {
-        try
-        {
-            var members = await _memberService.GetAllMembersAsync();
-            return Ok(members);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving all members");
-            return BadRequest(ex.Message);
-        }
+        var members = await _memberService.GetAllMembersAsync();
+        return Ok(members);
     }
 
     [HttpGet("employer/{employerId}")]
-    public async Task<ActionResult<IReadOnlyList<MemberDto>>> GetMembersByEmployer(Guid employerId)
+    [ProducesResponseType(typeof(IReadOnlyList<MemberDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetMembersByEmployer(Guid employerId)
     {
-        try
-        {
-            var members = await _memberService.GetMembersByEmployerAsync(employerId);
-            return Ok(members);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving members for employer {EmployerId}", employerId);
-            return BadRequest(ex.Message);
-        }
+        var members = await _memberService.GetMembersByEmployerAsync(employerId);
+        return Ok(members);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateMember(Guid id, [FromBody] UpdateMemberDto updateDto)
+    public async Task<IActionResult> UpdateMember(Guid id, [FromBody] UpdateMemberDto request)
     {
-        try
-        {
-            await _memberService.UpdateMemberAsync(id, updateDto);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error updating member {MemberId}", id);
-            return BadRequest(ex.Message);
-        }
+        await _memberService.UpdateMemberAsync(id, request);
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMember(Guid id)
     {
-        try
-        {
-            await _memberService.DeleteMemberAsync(id);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error deleting member {MemberId}", id);
-            return BadRequest(ex.Message);
-        }
+        await _memberService.DeleteMemberAsync(id);
+        return NoContent();
     }
 
     [HttpGet("{id}/contributions/total")]
-    public async Task<ActionResult<decimal>> GetTotalContributions(Guid id)
+    public async Task<IActionResult> GetTotalContributions(Guid id)
     {
-        try
-        {
-            var total = await _memberService.GetTotalContributionsAsync(id);
-            return Ok(total);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error getting total contributions for member {MemberId}", id);
-            return BadRequest(ex.Message);
-        }
+        var total = await _memberService.GetTotalContributionsAsync(id);
+        return Ok(total);
     }
 
     [HttpGet("{id}/benefits/eligibility")]
-    public async Task<ActionResult<bool>> CheckBenefitEligibility(Guid id)
+    public async Task<IActionResult> CheckBenefitEligibility(Guid id)
     {
-        try
-        {
-            var isEligible = await _memberService.IsMemberEligibleForBenefitsAsync(id);
-            return Ok(isEligible);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error checking benefit eligibility for member {MemberId}", id);
-            return BadRequest(ex.Message);
-        }
+        var isEligible = await _memberService.IsMemberEligibleForBenefitsAsync(id);
+        return Ok(isEligible);
     }
 }

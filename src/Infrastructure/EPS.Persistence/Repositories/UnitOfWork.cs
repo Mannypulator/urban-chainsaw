@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using EPS.Domain.Repositories;
 using EPS.Persistence.Data;
 
@@ -7,11 +6,11 @@ namespace EPS.Persistence.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly EPSDbContext _context;
-    private IMemberRepository? _memberRepository;
-    private IEmployerRepository? _employerRepository;
-    private IContributionRepository? _contributionRepository;
     private IBenefitEligibilityHistoryRepository? _benefitEligibilityHistoryRepository;
+    private IContributionRepository? _contributionRepository;
     private bool _disposed;
+    private IEmployerRepository? _employerRepository;
+    private IMemberRepository? _memberRepository;
 
     public UnitOfWork(EPSDbContext context)
     {
@@ -66,10 +65,7 @@ public class UnitOfWork : IUnitOfWork
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!_disposed && disposing)
-        {
-            _context.Dispose();
-        }
+        if (!_disposed && disposing) _context.Dispose();
         _disposed = true;
     }
 }

@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using EPS.Domain.Entities;
 using EPS.Domain.Repositories;
 using EPS.Persistence.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace EPS.Persistence.Repositories;
 
@@ -14,6 +14,7 @@ public class EmployerRepository : GenericRepository<Employer>, IEmployerReposito
     public async Task<Employer?> GetEmployerWithMembersAsync(Guid employerId)
     {
         return await _dbSet
+            .AsNoTracking()
             .Include(e => e.Members)
             .FirstOrDefaultAsync(e => e.Id == employerId);
     }

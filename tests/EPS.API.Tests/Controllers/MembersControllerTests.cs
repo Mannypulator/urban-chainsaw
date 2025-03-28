@@ -5,15 +5,14 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Xunit;
 
 namespace EPS.API.Tests.Controllers;
 
 public class MembersControllerTests
 {
-    private readonly Mock<IMemberService> _memberServiceMock;
-    private readonly Mock<ILogger<MembersController>> _loggerMock;
     private readonly MembersController _controller;
+    private readonly Mock<ILogger<MembersController>> _loggerMock;
+    private readonly Mock<IMemberService> _memberServiceMock;
 
     public MembersControllerTests()
     {

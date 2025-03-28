@@ -1,7 +1,7 @@
+using EPS.API.ActionFilters;
 using EPS.Application.DTOs;
 using EPS.Application.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace EPS.API.Controllers;
 
@@ -19,143 +19,76 @@ public class EmployersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<EmployerDto>> CreateEmployer([FromBody] CreateEmployerDto createDto)
+    [ProducesResponseType(typeof(EmployerDto), StatusCodes.Status200OK)]
+    // [ServiceFilter(typeof(ValidationModelFilterAttribute<CreateEmployerDto>))]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> CreateEmployer([FromBody] CreateEmployerDto request)
     {
-        try
-        {
-            var employer = await _employerService.CreateEmployerAsync(createDto);
-            return CreatedAtAction(nameof(GetEmployer), new { id = employer.Id }, employer);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating employer");
-            return BadRequest(ex.Message);
-        }
+        var employer = await _employerService.CreateEmployerAsync(request);
+        return CreatedAtAction(nameof(GetEmployer), new { id = employer.Id }, employer);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<EmployerDto>> GetEmployer(Guid id)
+    public async Task<IActionResult> GetEmployer(Guid id)
     {
-        try
-        {
-            var employer = await _employerService.GetEmployerByIdAsync(id);
-            if (employer == null)
-                return NotFound();
+        var employer = await _employerService.GetEmployerByIdAsync(id);
+        if (employer == null) return NotFound();
 
-            return Ok(employer);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving employer {EmployerId}", id);
-            return BadRequest(ex.Message);
-        }
+        return Ok(employer);
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<EmployerDto>>> GetAllEmployers()
+    public async Task<IActionResult> GetAllEmployers()
     {
-        try
-        {
-            var employers = await _employerService.GetAllEmployersAsync();
-            return Ok(employers);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving all employers");
-            return BadRequest(ex.Message);
-        }
+        var employers = await _employerService.GetAllEmployersAsync();
+        return Ok(employers);
     }
 
     [HttpGet("active")]
-    public async Task<ActionResult<IReadOnlyList<EmployerDto>>> GetActiveEmployers()
+    public async Task<IActionResult> GetActiveEmployers()
     {
-        try
-        {
-            var employers = await _employerService.GetActiveEmployersAsync();
-            return Ok(employers);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving active employers");
-            return BadRequest(ex.Message);
-        }
+        var employers = await _employerService.GetActiveEmployersAsync();
+        return Ok(employers);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateEmployer(Guid id, [FromBody] UpdateEmployerDto updateDto)
+    [ProducesResponseType(typeof(IReadOnlyList<ContributionDto>), StatusCodes.Status200OK)]
+    [ServiceFilter(typeof(ValidationModelFilterAttribute<UpdateEmployerDto>))]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+    public async Task<IActionResult> UpdateEmployer(Guid id, [FromBody] UpdateEmployerDto request)
     {
-        try
-        {
-            await _employerService.UpdateEmployerAsync(id, updateDto);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error updating employer {EmployerId}", id);
-            return BadRequest(ex.Message);
-        }
+        await _employerService.UpdateEmployerAsync(id, request);
+        return NoContent();
     }
 
     [HttpPost("{id}/deactivate")]
     public async Task<IActionResult> DeactivateEmployer(Guid id)
     {
-        try
-        {
-            await _employerService.DeactivateEmployerAsync(id);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error deactivating employer {EmployerId}", id);
-            return BadRequest(ex.Message);
-        }
+        await _employerService.DeactivateEmployerAsync(id);
+        return NoContent();
     }
 
     [HttpGet("{id}/members")]
-    public async Task<ActionResult<IReadOnlyList<MemberDto>>> GetEmployerMembers(Guid id)
+    public async Task<IActionResult> GetEmployerMembers(Guid id)
     {
-        try
-        {
-            var members = await _employerService.GetEmployerMembersAsync(id);
-            return Ok(members);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving members for employer {EmployerId}", id);
-            return BadRequest(ex.Message);
-        }
+        var members = await _employerService.GetEmployerMembersAsync(id);
+        return Ok(members);
     }
 
     [HttpGet("{id}/contributions/total")]
-    public async Task<ActionResult<decimal>> GetTotalContributions(
+    public async Task<IActionResult> GetTotalContributions(
         Guid id,
         [FromQuery] DateTime startDate,
         [FromQuery] DateTime endDate)
     {
-        try
-        {
-            var total = await _employerService.GetTotalContributionsAsync(id, startDate, endDate);
-            return Ok(total);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error calculating total contributions for employer {EmployerId}", id);
-            return BadRequest(ex.Message);
-        }
+        var total = await _employerService.GetTotalContributionsAsync(id, startDate, endDate);
+        return Ok(total);
     }
 
     [HttpGet("{id}/validate")]
-    public async Task<ActionResult<bool>> ValidateEmployer(Guid id)
+    public async Task<IActionResult> ValidateEmployer(Guid id)
     {
-        try
-        {
-            var isValid = await _employerService.ValidateEmployerAsync(id);
-            return Ok(isValid);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error validating employer {EmployerId}", id);
-            return BadRequest(ex.Message);
-        }
+        var isValid = await _employerService.ValidateEmployerAsync(id);
+        return Ok(isValid);
     }
 }

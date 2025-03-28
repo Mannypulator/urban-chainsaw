@@ -6,15 +6,14 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Xunit;
 
 namespace EPS.API.Tests.Controllers;
 
 public class ContributionsControllerTests
 {
     private readonly Mock<IContributionService> _contributionServiceMock;
-    private readonly Mock<ILogger<ContributionsController>> _loggerMock;
     private readonly ContributionsController _controller;
+    private readonly Mock<ILogger<ContributionsController>> _loggerMock;
 
     public ContributionsControllerTests()
     {

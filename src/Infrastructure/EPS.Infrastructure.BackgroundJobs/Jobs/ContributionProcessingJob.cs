@@ -23,9 +23,9 @@ public class ContributionProcessingJob
         {
             _logger.LogInformation("Starting to process pending contributions...");
 
-            var pendingContributions = await _contributionService.GetContributionsByStatusAsync(ContributionStatus.Pending);
+            var pendingContributions =
+                await _contributionService.GetContributionsByStatusAsync(ContributionStatus.Pending);
             foreach (var contribution in pendingContributions)
-            {
                 try
                 {
                     await _contributionService.ValidateContributionAsync(contribution.Id);
@@ -35,11 +35,10 @@ public class ContributionProcessingJob
                 {
                     _logger.LogError(ex, "Error validating contribution {ContributionId}", contribution.Id);
                 }
-            }
 
-            var validatedContributions = await _contributionService.GetContributionsByStatusAsync(ContributionStatus.Validated);
+            var validatedContributions =
+                await _contributionService.GetContributionsByStatusAsync(ContributionStatus.Validated);
             foreach (var contribution in validatedContributions)
-            {
                 try
                 {
                     await _contributionService.ProcessContributionAsync(contribution.Id);
@@ -49,7 +48,6 @@ public class ContributionProcessingJob
                 {
                     _logger.LogError(ex, "Error processing contribution {ContributionId}", contribution.Id);
                 }
-            }
 
             _logger.LogInformation("Finished processing contributions");
         }

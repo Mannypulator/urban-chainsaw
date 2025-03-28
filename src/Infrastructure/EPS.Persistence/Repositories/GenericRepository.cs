@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using EPS.Domain.Common;
 using EPS.Domain.Repositories;
 using EPS.Persistence.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace EPS.Persistence.Repositories;
 
@@ -24,7 +24,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 
     public virtual async Task<IReadOnlyList<T>> GetAllAsync()
     {
-        return await _dbSet.ToListAsync();
+        return await _dbSet.AsNoTracking().ToListAsync();
     }
 
     public virtual async Task<IReadOnlyList<T>> FindAsync(Expression<Func<T, bool>> predicate)

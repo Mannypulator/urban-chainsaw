@@ -1,6 +1,6 @@
+using EPS.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using EPS.Domain.Entities;
 
 namespace EPS.Persistence.Configurations;
 

@@ -23,25 +23,23 @@ public class InterestCalculationJob
         {
             _logger.LogInformation("Starting interest calculation for processed contributions...");
 
-            var processedContributions = await _contributionService.GetContributionsByStatusAsync(ContributionStatus.Processed);
+            var processedContributions =
+                await _contributionService.GetContributionsByStatusAsync(ContributionStatus.Processed);
             foreach (var contribution in processedContributions)
-            {
                 try
                 {
                     // Skip contributions that already have interest calculated
-                    if (contribution.InterestCalculationDate.HasValue)
-                    {
-                        continue;
-                    }
+                    if (contribution.InterestCalculationDate.HasValue) continue;
 
                     await _contributionService.CalculateInterestAsync(contribution.Id);
-                    _logger.LogInformation("Successfully calculated interest for contribution {ContributionId}", contribution.Id);
+                    _logger.LogInformation("Successfully calculated interest for contribution {ContributionId}",
+                        contribution.Id);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error calculating interest for contribution {ContributionId}", contribution.Id);
+                    _logger.LogError(ex, "Error calculating interest for contribution {ContributionId}",
+                        contribution.Id);
                 }
-            }
 
             _logger.LogInformation("Finished calculating interest for processed contributions");
         }

@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using EPS.Domain.Entities;
-using EPS.Domain.Common;
 using System.Linq.Expressions;
+using EPS.Domain.Common;
+using EPS.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace EPS.Persistence.Data;
 
@@ -26,7 +26,6 @@ public class EPSDbContext : DbContext
 
         // Global query filter for soft delete
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-        {
             if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
             {
                 var entityTypeBuilder = modelBuilder.Entity(entityType.ClrType);
@@ -35,13 +34,11 @@ public class EPSDbContext : DbContext
                 var condition = Expression.Lambda(Expression.Not(property), parameter);
                 entityTypeBuilder.HasQueryFilter(condition);
             }
-        }
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
-        {
             switch (entry.State)
             {
                 case EntityState.Added:
@@ -61,7 +58,6 @@ public class EPSDbContext : DbContext
                     entry.Entity.DeletedBy = "system"; // TODO: Get from current user
                     break;
             }
-        }
 
         return base.SaveChangesAsync(cancellationToken);
     }

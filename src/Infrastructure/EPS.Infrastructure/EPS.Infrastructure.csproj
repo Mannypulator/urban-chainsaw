@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Hangfire.Core" Version="1.8.*" />
-    <PackageReference Include="Hangfire.SqlServer" Version="1.8.*" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Hangfire.Core" Version="1.8.*"/>
+        <PackageReference Include="Hangfire.SqlServer" Version="1.8.*"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\EPS.Application\EPS.Application.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Core\EPS.Application\EPS.Application.csproj"/>
+    </ItemGroup>
 
 </Project>

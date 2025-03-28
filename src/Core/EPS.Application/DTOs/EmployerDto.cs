@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace EPS.Application.DTOs;
 
 public class EmployerDto

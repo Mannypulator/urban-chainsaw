@@ -1,6 +1,6 @@
 using AutoMapper;
-using EPS.Domain.Entities;
 using EPS.Application.DTOs;
+using EPS.Domain.Entities;
 
 namespace EPS.Application.Mappings;
 

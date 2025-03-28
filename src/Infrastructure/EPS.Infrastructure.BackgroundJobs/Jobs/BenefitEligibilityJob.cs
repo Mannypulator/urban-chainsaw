@@ -5,8 +5,8 @@ namespace EPS.Infrastructure.BackgroundJobs.Jobs;
 
 public class BenefitEligibilityJob
 {
-    private readonly IMemberService _memberService;
     private readonly ILogger<BenefitEligibilityJob> _logger;
+    private readonly IMemberService _memberService;
 
     public BenefitEligibilityJob(
         IMemberService memberService,
@@ -24,7 +24,6 @@ public class BenefitEligibilityJob
 
             var members = await _memberService.GetAllMembersAsync();
             foreach (var member in members)
-            {
                 try
                 {
                     await _memberService.UpdateBenefitEligibilityAsync(member.Id);
@@ -34,7 +33,6 @@ public class BenefitEligibilityJob
                 {
                     _logger.LogError(ex, "Error updating benefit eligibility for member {MemberId}", member.Id);
                 }
-            }
 
             _logger.LogInformation("Finished updating benefit eligibility for all members");
         }

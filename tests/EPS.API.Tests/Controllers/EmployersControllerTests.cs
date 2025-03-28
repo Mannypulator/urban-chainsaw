@@ -5,15 +5,14 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Xunit;
 
 namespace EPS.API.Tests.Controllers;
 
 public class EmployersControllerTests
 {
+    private readonly EmployersController _controller;
     private readonly Mock<IEmployerService> _employerServiceMock;
     private readonly Mock<ILogger<EmployersController>> _loggerMock;
-    private readonly EmployersController _controller;
 
     public EmployersControllerTests()
     {

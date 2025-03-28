@@ -11,5 +11,7 @@ public interface IContributionRepository : IGenericRepository<Contribution>
     Task<IReadOnlyList<Contribution>> GetContributionsByStatusAsync(ContributionStatus status);
     Task<decimal> GetTotalContributionsForPeriodAsync(Guid memberId, DateTime startDate, DateTime endDate);
     Task<IReadOnlyList<Contribution>> GetContributionsForInterestCalculationAsync(DateTime cutoffDate);
-    Task<decimal> GetTotalEmployerContributionsAsync(Guid employerId, DateTime? startDate = null, DateTime? endDate = null);
+
+    Task<decimal> GetTotalEmployerContributionsAsync(Guid employerId, DateTime? startDate = null,
+        DateTime? endDate = null);
 }
