@@ -14,15 +14,25 @@ public class GlobalExceptionalHandler(ILogger<GlobalExceptionalHandler> logger) 
         var problemDetails = new ProblemDetails
         {
             Status = StatusCodes.Status500InternalServerError,
-            Title = "Server error"
+            Title = "An unexpected error occurred our team is looking into it"
         };
 
-        if (exception is BadRequestException)
+        switch (exception)
         {
-            problemDetails.Status = StatusCodes.Status400BadRequest;
-            problemDetails.Title = exception.Message;
+            case BadRequestException:
+                problemDetails.Status = StatusCodes.Status400BadRequest;
+                problemDetails.Title = exception.Message;
+                break;
+            case NotFoundException:
+                problemDetails.Status = StatusCodes.Status404NotFound;  
+                problemDetails.Title = exception.Message;
+                break;
+            case DuplicateException:
+                problemDetails.Status = StatusCodes.Status409Conflict;
+                problemDetails.Title = exception.Message;
+                break;
         }
-        
+
         logger.LogError(exception, "Exception occurred: {Message}", exception.Message);
 
        

@@ -24,7 +24,7 @@ public class ContributionService : IContributionService
     {
         // Validate member exists
         var member = await _unitOfWork.Members.GetByIdAsync(createContributionDto.MemberId)
-                     ?? throw new DomainException($"Member with ID {createContributionDto.MemberId} not found.");
+                     ?? throw new ContributionNotFoundException($"Member with ID {createContributionDto.MemberId} not found.");
 
 
         var contribution = createContributionDto.MapToEntity();
@@ -37,7 +37,7 @@ public class ContributionService : IContributionService
     public async Task<ContributionDto> GetContributionByIdAsync(Guid id)
     {
         var contribution = await _unitOfWork.Contributions.GetByIdAsync(id);
-        if (contribution == null) throw new DomainException($"Contribution with ID {id} not found.");
+        if (contribution == null) throw new ContributionNotFoundException($"Contribution with ID {id} not found.");
 
         return contribution.MapToDto();
     }
@@ -58,18 +58,20 @@ public class ContributionService : IContributionService
     public async Task ValidateContributionAsync(Guid contributionId)
     {
         var contribution = await _unitOfWork.Contributions.GetByIdAsync(contributionId);
-        if (contribution == null) throw new DomainException($"Contribution with ID {contributionId} not found.");
+        if (contribution == null) throw new ContributionNotFoundException($"Contribution with ID {contributionId} not found.");
 
         if (contribution.Status != ContributionStatus.Pending)
-            throw new DomainException("Only pending contributions can be validated.");
+        {
+            throw new InvalidContributionBadRequestException("Only pending contributions can be validated.");
+        }
 
-        // Perform validation logic
+      
         var isValid = true;
         var validationMessage = "";
 
         try
         {
-            // Add validation rules here
+           
             if (contribution.Amount <= 0)
             {
                 isValid = false;
@@ -88,7 +90,7 @@ public class ContributionService : IContributionService
             await _unitOfWork.Contributions.UpdateAsync(contribution);
             await _unitOfWork.SaveChangesAsync();
 
-            // If contribution is valid, update member's benefit eligibility
+            
             if (isValid) await _memberService.UpdateBenefitEligibilityAsync(contribution.MemberId);
         }
         catch (Exception ex)
@@ -104,14 +106,14 @@ public class ContributionService : IContributionService
     public async Task ProcessContributionAsync(Guid contributionId)
     {
         var contribution = await _unitOfWork.Contributions.GetByIdAsync(contributionId);
-        if (contribution == null) throw new DomainException($"Contribution with ID {contributionId} not found.");
+        if (contribution == null) throw new ContributionNotFoundException($"Contribution with ID {contributionId} not found.");
 
         if (contribution.Status != ContributionStatus.Validated)
-            throw new DomainException("Only validated contributions can be processed.");
+            throw new ContributionProcessBadRequestException("Only validated contributions can be processed.");
 
         try
         {
-            // Add processing logic here
+           
             contribution.Status = ContributionStatus.Processed;
             await _unitOfWork.Contributions.UpdateAsync(contribution);
             await _unitOfWork.SaveChangesAsync();
@@ -129,17 +131,16 @@ public class ContributionService : IContributionService
     public async Task CalculateInterestAsync(Guid contributionId)
     {
         var contribution = await _unitOfWork.Contributions.GetByIdAsync(contributionId);
-        if (contribution == null) throw new DomainException($"Contribution with ID {contributionId} not found.");
+        if (contribution == null) throw new ContributionNotFoundException($"Contribution with ID {contributionId} not found.");
 
         if (contribution.Status != ContributionStatus.Processed)
-            throw new DomainException("Only processed contributions can earn interest.");
+            throw new ContributionProcessBadRequestException("Only processed contributions can earn interest.");
 
         if (contribution.InterestCalculationDate.HasValue)
-            throw new DomainException("Interest has already been calculated for this contribution.");
-
-        // Calculate interest (example: 5% annual interest, prorated by months)
+            throw new ContributionDuplicateException("Interest has already been calculated for this contribution.");
+        
         var monthsHeld = (DateTime.UtcNow - contribution.ContributionDate).Days / 30.0;
-        var annualRate = 0.05m; // 5% annual interest
+        var annualRate = 0.05m; 
         var interest = contribution.Amount * (annualRate / 12) * (decimal)monthsHeld;
 
         contribution.InterestEarned = interest;

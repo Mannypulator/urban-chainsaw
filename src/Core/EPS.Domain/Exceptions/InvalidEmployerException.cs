@@ -1,6 +1,6 @@
 namespace EPS.Domain.Exceptions;
 
-public class InvalidEmployerException : DomainException
+public class InvalidEmployerException : BadRequestException
 {
     private InvalidEmployerException(string message) : base(message)
     {

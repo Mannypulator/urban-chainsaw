@@ -19,7 +19,7 @@ public class EmployerService : IEmployerService
 
     public async Task<EmployerDto> CreateEmployerAsync(CreateEmployerDto createEmployerDto)
     {
-        // Check for duplicate registration number
+     
         if (await _unitOfWork.Employers.ExistsByRegistrationNumberAsync(createEmployerDto.RegistrationNumber))
             throw InvalidEmployerException.DuplicateRegistrationNumber(createEmployerDto.RegistrationNumber);
 
@@ -36,7 +36,7 @@ public class EmployerService : IEmployerService
     public async Task<EmployerDto> GetEmployerByIdAsync(Guid id)
     {
         var employer = await _unitOfWork.Employers.GetByIdAsync(id);
-        if (employer == null) throw new DomainException($"Employer with ID {id} not found.");
+        if (employer == null) throw new EmployeeNotFoundException($"Employer with ID {id} not found.");
 
         return employer.MapToDto();
     }
@@ -56,15 +56,15 @@ public class EmployerService : IEmployerService
     public async Task UpdateEmployerAsync(Guid id, UpdateEmployerDto updateEmployerDto)
     {
         var employer = await _unitOfWork.Employers.GetByIdAsync(id);
-        if (employer == null) throw new DomainException($"Employer with ID {id} not found.");
+        if (employer == null) throw new EmployeeNotFoundException($"Employer with ID {id} not found.");
 
-        // Check if registration number is being changed and if it's unique
+       
         if (updateEmployerDto.RegistrationNumber != employer.RegistrationNumber &&
             !string.IsNullOrWhiteSpace(updateEmployerDto.RegistrationNumber) &&
             await _unitOfWork.Employers.ExistsByRegistrationNumberAsync(updateEmployerDto.RegistrationNumber))
             throw InvalidEmployerException.DuplicateRegistrationNumber(updateEmployerDto.RegistrationNumber);
 
-        // Update employer properties
+ 
         employer.CompanyName = updateEmployerDto.Name;
         employer.RegistrationNumber = updateEmployerDto.RegistrationNumber;
         employer.Address = updateEmployerDto.Address;
@@ -81,11 +81,11 @@ public class EmployerService : IEmployerService
     public async Task DeactivateEmployerAsync(Guid id)
     {
         var employer = await _unitOfWork.Employers.GetByIdAsync(id);
-        if (employer == null) throw new DomainException($"Employer with ID {id} not found.");
+        if (employer == null) throw new EmployeeNotFoundException($"Employer with ID {id} not found.");
 
         // Check if employer has active members
         var activeMembers = await _unitOfWork.Members.GetActiveEmployerMembersAsync(id);
-        if (activeMembers.Any()) throw new DomainException("Cannot deactivate employer with active members.");
+        if (activeMembers.Any()) throw new EmployeeBadRequestException("Cannot deactivate employer with active members.");
 
         employer.IsActive = false;
         await _unitOfWork.Employers.UpdateAsync(employer);
@@ -95,7 +95,7 @@ public class EmployerService : IEmployerService
     public async Task<IReadOnlyList<MemberDto>> GetEmployerMembersAsync(Guid employerId)
     {
         var employer = await _unitOfWork.Employers.GetByIdAsync(employerId);
-        if (employer == null) throw new DomainException($"Employer with ID {employerId} not found.");
+        if (employer == null) throw new EmployeeNotFoundException($"Employer with ID {employerId} not found.");
 
         var members = await _unitOfWork.Members.GetMembersByEmployerAsync(employerId);
         return members.MapToDtoList();
@@ -105,7 +105,7 @@ public class EmployerService : IEmployerService
         DateTime? endDate = null)
     {
         var employer = await _unitOfWork.Employers.GetByIdAsync(employerId);
-        if (employer == null) throw new DomainException($"Employer with ID {employerId} not found.");
+        if (employer == null) throw new EmployeeNotFoundException($"Employer with ID {employerId} not found.");
 
         return await _unitOfWork.Contributions.GetTotalEmployerContributionsAsync(employerId, startDate, endDate);
     }
