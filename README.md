@@ -15,11 +15,12 @@ EPS+ is a comprehensive Pension Contribution Management System built with .NET C
 
 ## Technical Stack
 
-- .NET Core 7.0
+- .NET Core 8.0
 - Entity Framework Core
 - SQL Server
 - Hangfire (Background Jobs)
 - Swagger/OpenAPI
+- Fluent Validation
 - xUnit (Testing)
 
 ## Project Structure
@@ -41,7 +42,7 @@ EPS/
 
 ## Prerequisites
 
-- .NET Core SDK 7.0 or later
+- .NET Core SDK 8.0 or later
 - SQL Server
 - Visual Studio 2022 or VS Code
 
@@ -50,7 +51,7 @@ EPS/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/EPS.git
+git clone https://github.com/mannypulator/EPS.git
 cd EPS
 ```
 
@@ -89,7 +90,6 @@ dotnet test
 
 - **Clean Architecture**: Ensures separation of concerns and maintainability
 - **Domain-Driven Design**: Focus on core business logic and domain models
-- **CQRS Pattern**: Separation of read and write operations
 - **Repository Pattern**: Abstraction of data persistence
 - **Unit of Work**: Ensures data consistency
 - **Background Processing**: Hangfire for reliable job scheduling
@@ -97,10 +97,7 @@ dotnet test
 ## Security Considerations
 
 - Input validation
-- Authentication and Authorization
-- Data encryption
-- Secure communication
-- Audit logging
+
 
 ## Contributing
 
